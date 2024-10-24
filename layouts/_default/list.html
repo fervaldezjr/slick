@@ -1,6 +1,6 @@
 {{- define "main" }}
 <div>
-  <p>{{ .Title }}:</p>
+  <p>Últimos publicados:</p>
   <ul>
     {{- $orderkey := default "date" .Site.Params.orderPageParam }}
     {{- $orderrev := default true .Site.Params.orderPageReverse }}
@@ -11,6 +11,23 @@
       <div class="post-title">
         {{- if .Draft }}DRAFT: {{ end }}
         <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <span class="post-date">({{ .Date.Format "January 2, 2006" }}),</span>
+        {{ with .Params.categories }}
+        <span> Categorias:
+          {{ range $index, $category := . }}
+          <a href="/categories/{{ $category | urlize }}">{{ $category }}</a>{{ if ne (add $index 1) (len .) }} {{ end
+          }}
+          {{ end }}
+        </span>
+        {{ end }}
+        {{ with .Params.tags }}
+        <p>Etiquetas:
+          {{ range $index, $tag := . }}
+          <a href="/tags/{{ $tag | urlize }}">{{ $tag }}</a>{{ if lt (add $index 1) (len .) }} {{ end
+          }}
+          {{ end }}
+        </p>
+        {{ end }}
       </div>
       {{ partial "post_meta.html" . }}
     </li>

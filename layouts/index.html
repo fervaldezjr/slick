@@ -6,7 +6,7 @@
 {{- $pagepool := $pagepool.ByParam $orderkey }}
 {{- $pagepool := cond $orderrev $pagepool.Reverse $pagepool }}
 {{- range $idx, $_ := (.Paginate $pagepool).Pages }}
-<div{{ if and $showfull $idx }} class="post-divider"{{ end }}>
+<div{{ if and $showfull $idx }} class="post-divider" {{ end }}>
   {{- if default (default true .Site.Params.showMeta) .Params.showmeta }}
   <div>
     <h2 class="post-title">
@@ -19,7 +19,7 @@
   <div>
     {{ cond $showfull .Content .Summary }}
   </div>
-</div>
-{{- end }}
-{{ partial "pagination.html" . }}
-{{- end }}
+  </div>
+  {{- end }}
+  {{ partial "pagination.html" . }}
+  {{- end }}

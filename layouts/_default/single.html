@@ -2,11 +2,29 @@
 {{- $showmeta := default (default true $.Site.Params.showMeta) .Params.showmeta }}
 <div>
   {{- if $showmeta }}
+  <!-- vista de un solo post -->
   <div>
     <h2 class="post-title">
       {{ if .Draft }}DRAFT: {{ end }}
       {{ .Title }}
     </h2>
+    <span class="post-date">({{ .Date.Format "Octubre 2, 2006" }}),</span>
+    {{ with .Params.categories }}
+    <span> Categorias:
+      {{ range $index, $category := . }}
+      <a href="/categories/{{ $category | urlize }}">{{ $category }}</a>{{ if ne (add $index 1) (len .) }} {{ end
+      }}
+      {{ end }}
+    </span>
+    {{ end }}
+    {{ with .Params.tags }}
+    <span>Etiquetas:
+      {{ range $index, $tag := . }}
+      <a href="/tags/{{ $tag | urlize }}">{{ $tag }}</a>{{ if lt (add $index 1) (len .) }} {{ end
+      }}
+      {{ end }}
+    </span>
+    {{ end }}
     {{ partial "post_meta.html" . }}
   </div>
   {{- end }}
